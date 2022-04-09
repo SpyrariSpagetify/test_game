@@ -1,4 +1,4 @@
-  import * as me from 'melonjs/dist/melonjs.module.js';
+  import * as me from './../../melonjs.module';
   import stuff from '../stuff';
 
   export default class vrag extends me.Entity {
@@ -29,7 +29,7 @@
       this.body.force.set(settings.velX || 1, settings.velY || 1  );
       this.body.setMaxVelocity(settings.velX || 4, settings.velY || 1);
       this.isMovingEnemy = true;
-      debugger
+      
   }
 
     update(dt){
@@ -44,6 +44,7 @@
           // make it walk
           this.renderable.flipX(!this.walkLeft);
           this.body.vel.x =3 
+          debugger
           }
 }
 

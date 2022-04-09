@@ -1,5 +1,5 @@
 
-import * as me from 'melonjs/dist/melonjs.module.js';
+import * as me from './../../melonjs.module';
 
 export default class col extends me.Collectable{
   init = (x, y, settings) =>{

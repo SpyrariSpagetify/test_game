@@ -1,4 +1,4 @@
-import * as me from 'melonjs/dist/melonjs.module.js';
+import * as me from './../../melonjs.module';
 import game from '../stuff.js';
 
 /**
@@ -31,7 +31,7 @@ class PathEnemyEntity extends me.Entity {
         this.pos.x  = x + width - settings.framewidth;
 
         // enemies are not impacted by gravity
-        this.body.gravityScale = 0;
+        this.body.gravityScale = 0.3;
 
         this.walkLeft = false;
 
