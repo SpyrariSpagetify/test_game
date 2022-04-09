@@ -1,4 +1,4 @@
-import * as me from 'melonjs/dist/melonjs.module.js';
+import * as me from '.melonjs.module';
 
 import stuff from './stuff.js';
 import resources from './resources.js';
@@ -31,7 +31,6 @@ export default function onload() {
 
     // initialize the "sound engine"
     me.audio.init("mp3,ogg");
-    me.timer.maxfps = 43
 
     // set all ressources to be loaded
     me.loader.preload(resources, () => {

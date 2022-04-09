@@ -1,4 +1,4 @@
-import * as me from 'melonjs/dist/melonjs.module.js';
+import * as me from './../../melonjs.module';
 import stuff from '../stuff.js';
 
 
@@ -14,12 +14,15 @@ class PlayerEntity extends me.Entity {
         this.alwaysUpdate = true;
 
         // walking & jumping speed
-        this.body.setMaxVelocity(7, 14);
-        this.body.setFriction(2.2, 0);
+        this.body.setMaxVelocity(7, 10);
+        this.body.setFriction(0, 0);
 
         this.dying = false;
+        this.body.ignoreGravity =  true;
+        this.body.gravityScale  =  0.0;
+        this.body.mass = 0 
 
-        this.multipleJump = 1;
+        // this.multipleJump = 1;
 
         // set the viewport to follow this renderable on both axis, and enable damping
         me.game.viewport.follow(this, me.game.viewport.AXIS.BOTH, 0.4);
@@ -34,7 +37,7 @@ class PlayerEntity extends me.Entity {
 
         me.input.bindKey(me.input.KEY.A,     "left");
         me.input.bindKey(me.input.KEY.D,     "right");
-        me.input.bindKey(me.input.KEY.W,     "jump", true);
+        me.input.bindKey(me.input.KEY.W,     "jump");
         me.input.bindKey(me.input.KEY.S,     "down");
 
         //me.input.registerPointerEvent("pointerdown", this, this.onCollision.bind(this));
@@ -67,6 +70,7 @@ class PlayerEntity extends me.Entity {
 
         // set the renderable position to bottom center
         this.anchorPoint.set(0.0, 0.5);
+        debugger
     }
 
     /**
@@ -75,37 +79,58 @@ class PlayerEntity extends me.Entity {
     update(dt) {
 
         if (me.input.isKeyPressed("left"))    {
-            this.body.force.x = -this.body.maxVel.x;
+            this.body.force.x -= 0.2 ;
             this.renderable.flipX(true);
         } else if (me.input.isKeyPressed("right")) {
-            this.body.force.x = this.body.maxVel.x;
+            this.body.force.x += 0.2;
             this.renderable.flipX(false);
         } else {
             this.body.force.x = 0;
         }
 
         if (me.input.isKeyPressed("jump")) {
-            this.body.jumping = true;
-            if (this.multipleJump <= 2) {
-                // easy "math" for double jump
-                this.body.force.y = -this.body.maxVel.y * this.multipleJump++;
-                me.audio.stop("jump");
-                me.audio.play("jump", false);
-            }
-        }
-        else {
-
+            
+            this.body.force.y -= 0.7 ;
+            // this.body.falling = false;
+            // this.body.jumping = true;
+        } else if (me.input.isKeyPressed("down")) {
+            this.body.force.y += 0.7;
+            // this.body.jumping = false;
+            // this.body.falling = true;
+        } else {
             this.body.force.y = 0;
-
-            if (!this.body.falling && !this.body.jumping) {
-                // reset the multipleJump flag if on the ground
-                this.multipleJump = 1;
-            }
-            else if (this.body.falling && this.multipleJump < 2) {
-                // reset the multipleJump flag if falling
-                this.multipleJump = 2;
-            }
         }
+
+
+
+        //     this.body.jumping = true;
+        //     if (this.multipleJump <= 2) {
+        //         // easy "math" for double jump
+        //         this.body.force.y = -this.body.maxVel.y * this.multipleJump++;
+        //         me.audio.stop("jump");
+        //         me.audio.play("jump", false);
+        //     }
+        // } 
+        // else if (me.input.isKeyPressed("down")){
+        //     this.body.jumping = false;
+        //     this.body.force.y = this.body.maxVel.y;}
+
+        // else {
+
+        //     this.body.force.y = 0;
+
+        //     if (!this.body.falling && !this.body.jumping) {
+        //         // reset the multipleJump flag if on the ground
+        //         this.multipleJump = 1;
+        //     }
+        //     else if (this.body.falling && this.multipleJump < 2) {
+        //         // reset the multipleJump flag if falling
+        //         this.multipleJump = 2;
+        //     }
+        // }
+
+
+        
 
         // check if we fell into a hole
         if (!this.inViewport && (this.pos.y > me.video.renderer.getHeight())) {
