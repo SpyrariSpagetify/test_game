@@ -35,7 +35,7 @@ export default function onload() {
     // set all ressources to be loaded
     me.loader.preload(resources, () => {
 
-        // set the "Play/Ingame" Screen Object
+        // set the "Play/Ingame" Screen Object7
         me.state.set(me.state.PLAY, new PlayScreen());
 
         // set the fade transition effect
